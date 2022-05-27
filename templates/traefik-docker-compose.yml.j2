@@ -9,8 +9,6 @@ services:
     image: "traefik:v2.7"
     container_name: "traefik"
     restart: unless-stopped
-    networks:
-      - proxy
     labels:
       - "traefik.http.routers.dashboard.rule=Host(`pihole`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
       - "traefik.http.routers.dashboard.service=api@internal"
@@ -26,6 +24,3 @@ services:
       - "./traefik.yml:/traefik.yml:ro"
       - ".acme.json:/acme.json"
 
-networks:
-  proxy:
-    external: true
