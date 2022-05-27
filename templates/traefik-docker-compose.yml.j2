@@ -9,6 +9,11 @@ services:
     image: "traefik:v2.7"
     container_name: "traefik"
     restart: unless-stopped
+    labels:
+      - "traefik.http.routers.dashboard.rule=Host(`pihole`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
+      - "traefik.http.routers.dashboard.service=api@internal"
+      - "traefik.http.routers.dashboard.middlewares=auth"
+      - "traefik.http.middlewares.auth.basicauth.users=test:$$apr1$$H6uskkkW$$IgXLP6ewTrSuBkTrqE8wj/,test2:$$apr1$$d9hr9HBB$$4HxwgUir3HP4EsggP/QNo0"
     ports:
       - "80:80"
       - "443:443"
