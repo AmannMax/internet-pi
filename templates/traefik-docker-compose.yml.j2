@@ -8,20 +8,7 @@ services:
   traefik:
     image: "traefik:v2.7"
     container_name: "traefik"
-    command:
-      #- "--log.level=DEBUG"
-      - "--api"
-      - "--api.dashboard"
-      - "--api.insecure=true"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
-      - "--entrypoints.websecure.address=:443"
-      - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
-      - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
-      #- "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
-      - "--certificatesresolvers.myresolver.acme.email=postmaster@example.com"
-      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+    restart: unless-stopped
     ports:
       - "80:80"
       - "443:443"
@@ -29,3 +16,32 @@ services:
     volumes:
       - "./letsencrypt:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./traefik.yml:/etc/traefik/traefik.yml"
+
+  pihole:
+    container_name: pihole
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pihole.rule=Host(`pihole.local`)"
+      - "traefik.http.routers.pihole.entrypoints=http"
+    image: pihole/pihole:latest
+    hostname: 'pihole'
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "67:67/udp"
+      - "8000:8000/tcp"
+      - "4430:4430/tcp"
+    environment:
+      TZ: 'Europe/Berlin'
+      WEBPASSWORD: 'admin'
+      FTLCONF_REPLY_ADDR4: '192.168.178.2'
+    dns:
+      - 127.0.0.1
+      - 8.8.8.8
+    volumes:
+      - './etc-pihole/:/etc/pihole/'
+      - './etc-dnsmasq.d/:/etc/dnsmasq.d/'
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped

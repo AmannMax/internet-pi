@@ -8,9 +8,9 @@ services:
     container_name: pihole
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Host(`pihole.local`)"
-      - "traefik.http.routers.whoami.entrypoints=websecure"
-      - "traefik.http.routers.whoami.tls.certresolver=myresolver"
+      - "traefik.http.routers.pihole.rule=Host(`pihole.local`)"
+      - "traefik.http.routers.pihole.entrypoints=websecure"
+      - "traefik.http.routers.pihole.tls.certresolver=myresolver"
     image: pihole/pihole:latest
     hostname: '{{ pihole_hostname }}'
     ports:
