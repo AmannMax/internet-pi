@@ -1,11 +1,17 @@
 api:
   dashboard: true
+  insecure: true
 
 entryPoints:
   http:
     address: ":80"
-#  https:
-#    address: ":443"
+    http:
+      redirections:
+        entryPoint:
+          to: https
+          scheme: https
+  https:
+    address: ":443"
 
 providers:
   docker:
@@ -13,10 +19,10 @@ providers:
     exposedByDefault: false
     network: pi-hole_default
 
-#certificatesResolvers:
-#  letsencrypt:
-#    acme:
-#      email: mail@example.com
-#      storage: acme.json
-#      httpChallenge:
-#        entryPoint: http
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      email: mail@example.com
+      storage: acme.json
+      httpChallenge:
+        entryPoint: http
