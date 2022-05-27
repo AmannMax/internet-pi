@@ -6,14 +6,19 @@ version: "3"
 services:
   pihole:
     container_name: pihole
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`pihole.local`)"
+      - "traefik.http.routers.whoami.entrypoints=websecure"
+      - "traefik.http.routers.whoami.tls.certresolver=myresolver"
     image: pihole/pihole:latest
     hostname: '{{ pihole_hostname }}'
     ports:
       - "53:53/tcp"
       - "53:53/udp"
       - "67:67/udp"
-      - "80:80/tcp"
-      - "443:443/tcp"
+      - "8000:80/tcp"
+      - "4430:443/tcp"
     environment:
       TZ: '{{ pihole_timezone }}'
       WEBPASSWORD: '{{ pihole_password }}'
