@@ -11,11 +11,11 @@ providers:
   docker:
     endpoint: "unix:///var/run/docker.sock"
     exposedByDefault: false
-#
-#certificatesResolvers:
-#  http:
-#    acme:
-#      email: user@domain.com
-#      storage: acme.json
-#      httpChallenge:
-#        entryPoint: web
+
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      email: mail@example.com
+      storage: acme.json
+      httpChallenge:
+        entryPoint: http

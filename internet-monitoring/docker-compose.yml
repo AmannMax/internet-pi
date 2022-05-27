@@ -29,14 +29,17 @@ services:
       - speedtest:speedtest
     networks:
       - back-tier
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.prometheus.rule=Host(`prometheus.local`)"
+      - "traefik.http.routers.prometheus.entrypoints=http"
 
   grafana:
     image: grafana/grafana
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.grafana.rule=Host(`monitor.local`)"
-      - "traefik.http.routers.grafana.entrypoints=websecure"
-      - "traefik.http.routers.grafana.tls.certresolver=myresolver"
+      - "traefik.http.routers.grafana.rule=Host(`grafana.local`)"
+      - "traefik.http.routers.grafana.entrypoints=http"
     restart: always
     volumes:
       - grafana_data:/var/lib/grafana
@@ -54,6 +57,10 @@ services:
   ping:
     tty: true
     stdin_open: true
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.ping.rule=Host(`ping.local`)"
+      - "traefik.http.routers.ping.entrypoints=http"
     expose:
       - 9115
     ports:
@@ -68,6 +75,10 @@ services:
       - back-tier
 
   speedtest:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.speedtest.rule=Host(`speedtest.local`)"
+      - "traefik.http.routers.speedtest.entrypoints=http"
     expose:
       - 9798
     ports:
@@ -78,6 +89,10 @@ services:
       - back-tier
 
   nodeexp:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nodeexp.rule=Host(`nodeexp.local`)"
+      - "traefik.http.routers.nodeexp.entrypoints=http"
     privileged: true
     image: prom/node-exporter
     volumes:
