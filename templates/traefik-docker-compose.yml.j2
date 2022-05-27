@@ -9,6 +9,8 @@ services:
     image: "traefik:v2.7"
     container_name: "traefik"
     restart: unless-stopped
+    networks:
+      - proxy
     labels:
       - "traefik.http.routers.dashboard.rule=Host(`pihole`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
       - "traefik.http.routers.dashboard.service=api@internal"
@@ -21,4 +23,9 @@ services:
     volumes:
       - "./letsencrypt:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "./traefik.yml:/etc/traefik/traefik.yml"
+      - "./traefik.yml:/traefik.yml:ro"
+      - ".acme.json:/acme.json"
+
+networks:
+  proxy:
+    external: true
