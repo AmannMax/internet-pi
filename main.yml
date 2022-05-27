@@ -31,7 +31,7 @@
       ansible.builtin.import_tasks: tasks/docker.yml
 
     - name: Setup traefik.
-      ansible.builtin.import_task: tasks/traefik.yml
+      ansible.builtin.import_tasks: tasks/traefik.yml
 
     - name: Set up Internet Monitoring.
       ansible.builtin.import_tasks: tasks/internet-monitoring.yml
