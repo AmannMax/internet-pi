@@ -23,7 +23,7 @@ certificatesresolvers:
       #tlschallenge: true
       httpChallenge:
         entryPoint: web
-      email: "<Deine@E-Mail-Adresse>"
+      email: "foo@bar.baz"
       storage: "/letsencrypt/acme.json"
       # Benutze Let's Encrypt Staging CA zum testen!
       # caServer: https://acme-staging-v02.api.letsencrypt.org/directory
