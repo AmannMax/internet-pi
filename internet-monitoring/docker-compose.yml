@@ -32,14 +32,14 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.prometheus.rule=Host(`prometheus.local`)"
-      - "traefik.http.routers.prometheus.entrypoints=http"
+      - "traefik.http.routers.prometheus.entrypoints=web"
 
   grafana:
     image: grafana/grafana
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.grafana.rule=Host(`grafana.local`)"
-      - "traefik.http.routers.grafana.entrypoints=http"
+      - "traefik.http.routers.grafana.entrypoints=web"
     restart: always
     volumes:
       - grafana_data:/var/lib/grafana
@@ -60,7 +60,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.ping.rule=Host(`ping.local`)"
-      - "traefik.http.routers.ping.entrypoints=http"
+      - "traefik.http.routers.ping.entrypoints=web"
     expose:
       - 9115
     ports:
@@ -78,7 +78,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.speedtest.rule=Host(`speedtest.local`)"
-      - "traefik.http.routers.speedtest.entrypoints=http"
+      - "traefik.http.routers.speedtest.entrypoints=web"
     expose:
       - 9798
     ports:
@@ -92,7 +92,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.nodeexp.rule=Host(`nodeexp.local`)"
-      - "traefik.http.routers.nodeexp.entrypoints=http"
+      - "traefik.http.routers.nodeexp.entrypoints=web"
     privileged: true
     image: prom/node-exporter
     volumes:

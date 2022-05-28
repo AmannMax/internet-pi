@@ -9,7 +9,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.pihole.rule=Host(`pihole`)"
-      - "traefik.http.routers.pihole.entrypoints=http"
+      - "traefik.http.routers.pihole.entrypoints=web"
     image: pihole/pihole:latest
     hostname: '{{ pihole_hostname }}'
     ports:
