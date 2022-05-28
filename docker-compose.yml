@@ -1,14 +1,38 @@
-version: "3"
-
-# More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
+version: "3.3"
 services:
-  pihole:
-    container_name: pihole
+
+  traefik:
+    image: "traefik:v2.7"
+    container_name: "traefik"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - "./letsencrypt:/letsencrypt"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./log/traefik:/log/traefik"
+      - "./traefik_data/traefik.yml:/traefik.yml"
+      - "./traefik_data/dynamic.yml:/dynamic.yml"
+      - "/etc/localtime:/etc/localtime:ro"
+
+  whoami:
+    image: "containous/whoami"
+    container_name: "whoami"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.pihole.rule=Host(`pihole`)"
-      - "traefik.http.routers.pihole.entrypoints=http"
-    image: pihole/pihole:latest
+      - "traefik.http.routers.whoami.rule=Host(`whoami.$DOMAIN`)"
+      - "traefik.http.routers.whoami.entrypoints=websecure"
+      - "traefik.http.routers.whoami.tls.certresolver=myresolver"
+
+  pihole:
+    image: "pihole/pihole:latest"
+    container_name: "pihole"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pihole.rule=Host(`$DOMAIN`, `pihole.$DOMAIN`)"
+      - "traefik.http.routers.pihole.entrypoints=websecure"
+      - "traefik.http.routers.pihole.tls.certresolver=myresolver"
     hostname: 'pihole'
     ports:
       - "53:53/tcp"
@@ -29,3 +53,10 @@ services:
     cap_add:
       - NET_ADMIN
     restart: unless-stopped
+    networks:
+      - default
+      - web
+
+networks:
+  web:
+    external: true
