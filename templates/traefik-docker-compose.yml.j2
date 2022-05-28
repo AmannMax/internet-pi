@@ -21,7 +21,7 @@ services:
       - "./letsencrypt:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "./log/traefik:/log/traefik"
-      - "./traefik/traefik.yml:/traefik.yml"
-      - "./traefik/dynamic.yml:/dynamic.yml"
+      - "/traefik/traefik.yml:/traefik.yml"
+      - "/traefik/dynamic.yml:/dynamic.yml"
       - "/etc/localtime:/etc/localtime:ro"
     restart: unless-stopped
