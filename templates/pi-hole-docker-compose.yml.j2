@@ -8,7 +8,7 @@ services:
     container_name: pihole
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.pihole.rule=Host(`pihole`)"
+      - "traefik.http.routers.pihole.rule=Host(`pihole.fritz.box`)"
       - "traefik.http.routers.pihole.entrypoints=web"
     image: pihole/pihole:latest
     hostname: '{{ pihole_hostname }}'
