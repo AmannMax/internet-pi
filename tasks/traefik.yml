@@ -22,7 +22,7 @@
 
 - name: Copy traefik configuration to Pi.
   ansible.builtin.copy:
-    src: "traefik/{{ item.src }}"
+    src: "../traefik/{{ item.src }}"
     dest: "{{ config_dir }}/configuration/{{ item.dest }}"
     mode: "0755"
   loop:
