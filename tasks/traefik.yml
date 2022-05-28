@@ -25,6 +25,8 @@
     src: templates/{{ item.src }}
     dest: "{{ config_dir }}/traefik/configuration/{{ item.dest }}"
     mode: "0644"
+    owner: pi
+    group: pi
   loop:
     - src: traefik-dynamic.yml.j2
       dest: dynamic.yml
