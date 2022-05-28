@@ -8,7 +8,6 @@ services:
   traefik:
     image: "traefik:v2.7"
     container_name: "traefik"
-    restart: unless-stopped
     labels:
       - "traefik.http.routers.dashboard.rule=Host(`pihole`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
       - "traefik.http.routers.dashboard.service=api@internal"
@@ -21,6 +20,8 @@ services:
     volumes:
       - "./letsencrypt:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "./traefik.yml:/traefik.yml:ro"
-      - ".acme.json:/acme.json"
-
+      - "./log/traefik:/log/traefik"
+      - "./traefik/traefik.yml:/traefik.yml"
+      - "./traefik/dynamic.yml:/dynamic.yml"
+      - "/etc/localtime:/etc/localtime:ro"
+    restart: unless-stopped

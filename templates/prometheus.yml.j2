@@ -72,10 +72,3 @@ scrape_configs:
   - job_name: 'nodeexp'
     static_configs:
       - targets: ['nodeexp:9100']
-
-{% if cultivator_enable %}
-  - job_name: 'cultivator'
-    scrape_interval: 15s
-    static_configs:
-      - targets: ['probe:5000']
-{% endif %}

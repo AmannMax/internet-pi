@@ -41,10 +41,6 @@
       ansible.builtin.import_tasks: tasks/pi-hole.yml
       when: pihole_enable
 
-    - name: Setup Cultivator.
-      ansible.builtin.import_tasks: tasks/cultivator.yml
-      when: cultivator_enable
-
 #    - name: Set up Shelly Plug Monitoring.
 #      ansible.builtin.import_tasks: tasks/shelly-plug.yml
 #      when: shelly_plug_enable
