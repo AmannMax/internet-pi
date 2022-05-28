@@ -6,6 +6,7 @@ providers:
   docker: #true
     endpoint: "unix:///var/run/docker.sock"
     exposedbydefault: false
+    network: internet-monitoring_front-tier
   file:
     filename: "./dynamic.yml"
     watch: true
