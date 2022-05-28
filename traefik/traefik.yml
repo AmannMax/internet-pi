@@ -1,5 +1,3 @@
-# {{ ansible_managed }}
----
 log:
   level: "INFO"
   filePath: "/log/traefik/traefik.log"
@@ -30,4 +28,3 @@ certificatesresolvers:
       # Benutze Let's Encrypt Staging CA zum testen!
       caServer: https://acme-staging-v02.api.letsencrypt.org/directory
 accessLog: {}
-

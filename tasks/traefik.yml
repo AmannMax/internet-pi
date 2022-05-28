@@ -24,7 +24,7 @@
   ansible.builtin.template:
     src: templates/{{ item.src }}
     dest: "{{ config_dir }}/configuration/{{ item.dest }}"
-    mode: "0755"
+    mode: 0644
   loop:
     - src: traefik-dynamic.yml.j2
       dest: dynamic.yml
