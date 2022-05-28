@@ -27,6 +27,13 @@
     mode: "0755"
   become: false
 
+- name: Create letsencrypt folder on Pi.
+  ansible.builtin.file:
+    path: "{{ config_dir }}/traefik/letsencrypt"
+    state: directory
+    mode: "0755"
+  become: false
+
 - name: Create ACME file for traefik
   ansible.builtin.file:
     path: "{{ config_dir }}/traefik/letsencrypt/acme.json"
