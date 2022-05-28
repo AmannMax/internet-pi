@@ -21,14 +21,14 @@
   become: false
 
 - name: Copy traefik configuration to Pi.
-  ansible.builtin.copy:
-    src: "../traefik/{{ item.src }}"
+  ansible.builtin.template:
+    src: templates/{{ item.src }}
     dest: "{{ config_dir }}/configuration/{{ item.dest }}"
     mode: "0755"
   loop:
-    - src: dynamic.yml
+    - src: traefik-dynamic.yml.j2
       dest: dynamic.yml
-    - src: traefik.yml
+    - src: traefik.yml.j2
       dest: traefik.yml
 
 - name: Copy traefik .env file to Pi.
