@@ -24,12 +24,13 @@
   ansible.builtin.template:
     src: templates/{{ item.src }}
     dest: "{{ config_dir }}/traefik/configuration/{{ item.dest }}"
-    mode: 0644
+    mode: "0644"
   loop:
     - src: traefik-dynamic.yml.j2
       dest: dynamic.yml
     - src: traefik.yml.j2
       dest: traefik.yml
+  become: false
 
 - name: Copy traefik .env file to Pi.
   ansible.builtin.copy:
