@@ -8,7 +8,7 @@
 
 - name: Copy traefik docker-compose template to Pi.
   ansible.builtin.template:
-    src: ./{{ item.src }}
+    src: /{{ item.src }}
     dest: "{{ config_dir }}/traefik/{{ item.dest }}"
     mode: '0640'
   loop:
