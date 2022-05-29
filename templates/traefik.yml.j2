@@ -3,32 +3,13 @@ log:
   level: "INFO"
   filePath: "/log/traefik/traefik.log"
 providers:
-  docker: #true
-    endpoint: "unix:///var/run/docker.sock"
-    exposedbydefault: false
-    network: internet-monitoring_front-tier
-  file:
-    filename: "./dynamic.yml"
-    watch: true
-entrypoints:
-  web:
-    address: :80
-  websecure:
-    address: :443
-  dashboard:
-    address: :8080
+  docker:
+    exposedByDefault: false
+    network: pi_default
+    defaultRule: 'Host(`{{ normalize .Name | replace "-pi" "" }}`)'
 api:
-  dashboard: true
   insecure: true
-certificatesresolvers:
-  myresolver:
-    acme:
-      #tlschallenge: true
-      httpChallenge:
-        entryPoint: web
-      email: "foo@bar.baz"
-      storage: "/letsencrypt/acme.json"
-      # Benutze Let's Encrypt Staging CA zum testen!
-      caServer: https://acme-staging-v02.api.letsencrypt.org/directory
-accessLog: {}
+entryPoints:
+  http:
+    address: :80
 

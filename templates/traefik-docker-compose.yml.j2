@@ -9,19 +9,18 @@ services:
     image: "traefik:v2.7"
     container_name: "traefik"
     labels:
-      - "traefik.http.routers.dashboard.rule=Host(`traefik.pihole.fritz.box`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
-      - "traefik.http.routers.dashboard.service=api@internal"
-      - "traefik.http.routers.dashboard.middlewares=auth"
-      - "traefik.http.middlewares.auth.basicauth.users=test:$$apr1$$H6uskkkW$$IgXLP6ewTrSuBkTrqE8wj/,test2:$$apr1$$d9hr9HBB$$4HxwgUir3HP4EsggP/QNo0"
+      - "traefik.enable=true"
+        - "traefik.http.routers.dashboardRouter.entrypoints=http"
+        - "traefik.http.routers.dashboardRouter.service=dashboard@internal"
+        - "traefik.http.routers.dashboardRouter.rule=Host(`traefik.pihole`)"
     ports:
       - "80:80"
-      - "443:443"
+      # - "443:443"
       - "8080:8080"
     volumes:
       - "./letsencrypt:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "./log/traefik:/log/traefik"
       - "./configuration/traefik.yml:/traefik.yml"
-      - "./configuration/dynamic.yml:/dynamic.yml"
       - "/etc/localtime:/etc/localtime:ro"
     restart: unless-stopped
