@@ -1,12 +1,11 @@
 ---
-#log:
-#  level: "INFO"
-#  filePath: "/log/traefik/traefik.log"
+log:
+  level: "INFO"
+  filePath: "/log/traefik/traefik.log"
 providers:
   docker:
     exposedByDefault: false
     network: "pi_default"
-    defaultRule: "Host(`{{ normalize .Name | replace "-pi" "" }}`)"
 api:
   insecure: true
 entryPoints:
