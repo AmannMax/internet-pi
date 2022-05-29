@@ -5,8 +5,8 @@
 providers:
   docker:
     exposedByDefault: false
-    network: pi_default
-    defaultRule: "Host(`{{ normalize.Name | replace "-pi" "" }}`)"
+    network: "pi_default"
+    defaultRule: "Host(`{{ normalize .Name | replace "-pi" "" }}`)"
 api:
   insecure: true
 entryPoints:
