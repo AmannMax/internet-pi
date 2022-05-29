@@ -10,9 +10,9 @@ services:
     container_name: "traefik"
     labels:
       - "traefik.enable=true"
-        - "traefik.http.routers.dashboardRouter.entrypoints=http"
-        - "traefik.http.routers.dashboardRouter.service=dashboard@internal"
-        - "traefik.http.routers.dashboardRouter.rule=Host(`traefik.pihole`)"
+      - "traefik.http.routers.dashboardRouter.entrypoints=http"
+      - "traefik.http.routers.dashboardRouter.service=dashboard@internal"
+      - "traefik.http.routers.dashboardRouter.rule=Host(`traefik.pihole`)"
     ports:
       - "80:80"
       # - "443:443"
